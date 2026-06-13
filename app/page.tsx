@@ -365,8 +365,8 @@ export default function Home() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt="Stellar"
-              className="w-16 h-16 object-contain grayscale brightness-200"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFHp5xKegSr1SwR8uQgQd60tTJJ7JKHQp8E1L8vWmyyaX2WXEHBXOxnjC33Ws64QTj6zqdSKaohvLzW8wiRA3JXXl6YhUh0eO87zSioZ87yO0TVNY1EjjoOgJg-YD-6ldPMv4pwhz2wQM5QcVyOPmq1RK7XoepurWF5qpnLjG7otkvRpLTnnibwiqpy6WSG8TkyJ84SczZNmRHs9APoNO-RY0llpSz4qPWGM6-8IFDa1UVccK60qL7VaQNoYroPIqvIYeRU98ZB-ZE"
+              className="w-16 h-16 object-contain rounded-full"
+              src="/stellar-logo.png"
             />
           </div>
           <h2 className="font-heading text-headline-lg font-bold text-primary mb-6">
