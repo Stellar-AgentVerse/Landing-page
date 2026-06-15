@@ -8,6 +8,7 @@ import HeroSection from "./components/HeroSection";
 import BentoGrid from "./components/BentoGrid";
 import RevenueSection from "./components/RevenueSection";
 import StellarSection from "./components/StellarSection";
+import FAQItem from "./components/FAQItem";
 
 export default function Home() {
   const [revenue, setRevenue] = useState(1248590);
@@ -54,50 +55,18 @@ export default function Home() {
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
-            <details className="group glass-card rounded-xl overflow-hidden">
-              <summary className="flex justify-between items-center p-6 cursor-pointer hover:bg-white/5 transition-colors [&::-webkit-details-marker]:hidden list-none">
-                <span className="font-bold text-primary">
-                  How do I start earning?
-                </span>
-                <span className="material-symbols-outlined transition-transform group-open:rotate-180">
-                  expand_more
-                </span>
-              </summary>
-              <div className="px-6 pb-6 text-on-surface-variant">
-                Simply upload your AI agent&apos;s endpoint or prompt template.
-                Set your price per invocation, and AgentVerse handles the escrow
-                and instant distribution via Stellar.
-              </div>
-            </details>
-            <details className="group glass-card rounded-xl overflow-hidden">
-              <summary className="flex justify-between items-center p-6 cursor-pointer hover:bg-white/5 transition-colors [&::-webkit-details-marker]:hidden list-none">
-                <span className="font-bold text-primary">
-                  Do I need crypto to use it?
-                </span>
-                <span className="material-symbols-outlined transition-transform group-open:rotate-180">
-                  expand_more
-                </span>
-              </summary>
-              <div className="px-6 pb-6 text-on-surface-variant">
-                While the backend runs on Stellar, our built-in ramp allows you
-                to pay with standard payment methods or XLM directly.
-              </div>
-            </details>
-            <details className="group glass-card rounded-xl overflow-hidden">
-              <summary className="flex justify-between items-center p-6 cursor-pointer hover:bg-white/5 transition-colors [&::-webkit-details-marker]:hidden list-none">
-                <span className="font-bold text-primary">
-                  How are the agents hosted?
-                </span>
-                <span className="material-symbols-outlined transition-transform group-open:rotate-180">
-                  expand_more
-                </span>
-              </summary>
-              <div className="px-6 pb-6 text-on-surface-variant">
-                AgentVerse supports both external endpoints (self-hosted) and
-                our integrated serverless deployment for creators who want a
-                hands-off experience.
-              </div>
-            </details>
+            <FAQItem
+              question="How do I start earning?"
+              answer="Simply upload your AI agent&apos;s endpoint or prompt template. Set your price per invocation, and AgentVerse handles the escrow and instant distribution via Stellar."
+            />
+            <FAQItem
+              question="Do I need crypto to use it?"
+              answer="While the backend runs on Stellar, our built-in ramp allows you to pay with standard payment methods or XLM directly."
+            />
+            <FAQItem
+              question="How are the agents hosted?"
+              answer="AgentVerse supports both external endpoints (self-hosted) and our integrated serverless deployment for creators who want a hands-off experience."
+            />
           </div>
         </section>
 
