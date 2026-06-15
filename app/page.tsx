@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useGlassCardTracking } from "./hooks/useGlassCardTracking";
 
 export default function Home() {
   const [revenue, setRevenue] = useState(1248590);
@@ -19,24 +20,7 @@ export default function Home() {
   }, []);
 
   // Glass card mouse tracking
-  useEffect(() => {
-    const cards = document.querySelectorAll<HTMLElement>(".glass-card");
-    const handler = (e: MouseEvent, card: HTMLElement) => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
-      card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
-    };
-    cards.forEach((card) => {
-      card.addEventListener("mousemove", (e) => handler(e, card));
-    });
-    return () => {
-      cards.forEach((card) => {
-        card.removeEventListener("mousemove", (e) =>
-          handler(e as MouseEvent, card),
-        );
-      });
-    };
-  }, []);
+  useGlassCardTracking();
 
   // Close modal on Escape or click outside
   useEffect(() => {
