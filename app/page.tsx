@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useGlassCardTracking } from "./hooks/useGlassCardTracking";
+import { useRevenueTicker } from "./hooks/useRevenueTicker";
 import UnderConstructionModal from "./components/UnderConstructionModal";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
@@ -13,27 +14,13 @@ import FinalCTA from "./components/FinalCTA";
 import Footer from "./components/Footer";
 
 export default function Home() {
-  const [revenue, setRevenue] = useState(1248590);
   const [showUnderConstruction, setShowUnderConstruction] = useState(false);
 
   const handleUnderConstruction = () => setShowUnderConstruction(true);
   const handleCloseUnderConstruction = () => setShowUnderConstruction(false);
 
-  // Revenue ticker
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRevenue((prev) => prev + Math.random() * 5);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Glass card mouse tracking
+  useRevenueTicker();
   useGlassCardTracking();
-
-  const formattedRevenue = new Intl.NumberFormat("en-US", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(Math.floor(revenue));
 
   return (
     <>
