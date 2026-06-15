@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useGlassCardTracking } from "./hooks/useGlassCardTracking";
 import UnderConstructionModal from "./components/UnderConstructionModal";
 import Navbar from "./components/Navbar";
+import StatusBadge from "./components/StatusBadge";
 
 export default function Home() {
   const [revenue, setRevenue] = useState(1248590);
@@ -38,13 +39,7 @@ export default function Home() {
 
         {/* ========== HERO ========== */}
         <section className="relative z-10 px-6 py-20 md:py-32 flex flex-col items-center text-center max-w-4xl mx-auto">
-          {/* Status badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 mb-8">
-            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-            <span className="font-label text-label-sm text-accent uppercase tracking-widest">
-              V1.0 Live on Stellar
-            </span>
-          </div>
+          <StatusBadge />
 
           {/* Heading */}
           <h1 className="text-headline-md md:text-display-xl text-primary mb-6 leading-tight font-heading font-bold">
