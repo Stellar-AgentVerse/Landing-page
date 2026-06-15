@@ -5,6 +5,7 @@ import { useGlassCardTracking } from "./hooks/useGlassCardTracking";
 import UnderConstructionModal from "./components/UnderConstructionModal";
 import Navbar from "./components/Navbar";
 import StatusBadge from "./components/StatusBadge";
+import CTAButtons from "./components/CTAButtons";
 
 export default function Home() {
   const [revenue, setRevenue] = useState(1248590);
@@ -51,24 +52,10 @@ export default function Home() {
             marketplace powered by Stellar.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <button
-              onClick={handleUnderConstruction}
-              className="bg-accent text-background font-bold px-12 py-4 rounded-full transition-transform active:scale-95 flex items-center justify-center gap-2 group"
-            >
-              Explore Marketplace
-              <span className="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">
-                arrow_forward
-              </span>
-            </button>
-            <button
-              onClick={handleUnderConstruction}
-              className="border border-outline text-primary font-bold px-12 py-4 rounded-full hover:bg-white/5 transition-all active:scale-95"
-            >
-              Become a Creator
-            </button>
-          </div>
+          <CTAButtons
+            onExplore={handleUnderConstruction}
+            onCreate={handleUnderConstruction}
+          />
 
           {/* Social Proof */}
           {/*   <div className="mt-20 pt-10 border-t border-outline-variant/10 w-full"> */}
