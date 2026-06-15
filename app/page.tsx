@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { useGlassCardTracking } from "./hooks/useGlassCardTracking";
 import UnderConstructionModal from "./components/UnderConstructionModal";
 import Navbar from "./components/Navbar";
-import StatusBadge from "./components/StatusBadge";
-import CTAButtons from "./components/CTAButtons";
+import HeroSection from "./components/HeroSection";
 
 export default function Home() {
   const [revenue, setRevenue] = useState(1248590);
@@ -38,70 +37,7 @@ export default function Home() {
         {/* ========== BACKGROUND ATMOSPHERE ========== */}
         <div className="fixed inset-0 pointer-events-none stellar-gradient z-0" />
 
-        {/* ========== HERO ========== */}
-        <section className="relative z-10 px-6 py-20 md:py-32 flex flex-col items-center text-center max-w-4xl mx-auto">
-          <StatusBadge />
-
-          {/* Heading */}
-          <h1 className="text-headline-md md:text-display-xl text-primary mb-6 leading-tight font-heading font-bold">
-            The Economy of <span className="text-accent italic">AI Agents</span>
-          </h1>
-
-          <p className="text-body-lg text-on-surface-variant max-w-2xl mb-10">
-            Discover, deploy, and monetize AI assets on the first decentralized
-            marketplace powered by Stellar.
-          </p>
-
-          <CTAButtons
-            onExplore={handleUnderConstruction}
-            onCreate={handleUnderConstruction}
-          />
-
-          {/* Social Proof */}
-          {/*   <div className="mt-20 pt-10 border-t border-outline-variant/10 w-full"> */}
-          {/*     <p className="font-label text-label-sm text-on-surface-variant/60 mb-8 uppercase tracking-widest"> */}
-          {/*       Trusted by 500+ AI Developers */}
-          {/*     </p> */}
-          {/*     <div className="flex flex-wrap justify-center gap-12 opacity-40 grayscale hover:grayscale-0 transition-all duration-500"> */}
-          {/*       <div className="flex items-center gap-2"> */}
-          {/*         <span */}
-          {/*           className="material-symbols-outlined" */}
-          {/*           style={{ fontVariationSettings: "'FILL' 1" }} */}
-          {/*         > */}
-          {/*           deployed_code */}
-          {/*         </span> */}
-          {/*         <span className="font-bold">CYPHER</span> */}
-          {/*       </div> */}
-          {/*       <div className="flex items-center gap-2"> */}
-          {/*         <span */}
-          {/*           className="material-symbols-outlined" */}
-          {/*           style={{ fontVariationSettings: "'FILL' 1" }} */}
-          {/*         > */}
-          {/*           memory */}
-          {/*         </span> */}
-          {/*         <span className="font-bold">NEURA</span> */}
-          {/*       </div> */}
-          {/*       <div className="flex items-center gap-2"> */}
-          {/*         <span */}
-          {/*           className="material-symbols-outlined" */}
-          {/*           style={{ fontVariationSettings: "'FILL' 1" }} */}
-          {/*         > */}
-          {/*           terminal */}
-          {/*         </span> */}
-          {/*         <span className="font-bold">SYNTH</span> */}
-          {/*       </div> */}
-          {/*       <div className="flex items-center gap-2"> */}
-          {/*         <span */}
-          {/*           className="material-symbols-outlined" */}
-          {/*           style={{ fontVariationSettings: "'FILL' 1" }} */}
-          {/*         > */}
-          {/*           hub */}
-          {/*         </span> */}
-          {/*         <span className="font-bold">ORBIT</span> */}
-          {/*       </div> */}
-          {/*     </div> */}
-          {/*   </div> */}
-        </section>
+        <HeroSection onUnderConstruction={handleUnderConstruction} />
 
         {/* ========== BENTO FEATURE GRID ========== */}
         <section className="relative z-10 px-6 py-20 max-w-7xl mx-auto">
