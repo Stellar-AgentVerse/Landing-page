@@ -5,6 +5,7 @@ import { useGlassCardTracking } from "./hooks/useGlassCardTracking";
 import UnderConstructionModal from "./components/UnderConstructionModal";
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
+import FeatureCard from "./components/FeatureCard";
 
 export default function Home() {
   const [revenue, setRevenue] = useState(1248590);
@@ -68,37 +69,19 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Small Feature — Prompt Library */}
-            <div className="md:col-span-4 glass-card rounded-xl p-12 group">
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
-                <span className="material-symbols-outlined text-primary text-2xl">
-                  terminal
-                </span>
-              </div>
-              <h3 className="font-heading text-headline-md font-semibold text-primary mb-4">
-                Prompt Library
-              </h3>
-              <p className="text-on-surface-variant">
-                Access a curated marketplace of high-performance prompt
-                engineering templates for LLMs.
-              </p>
-            </div>
+            <FeatureCard
+              className="md:col-span-4"
+              icon="terminal"
+              title="Prompt Library"
+              description="Access a curated marketplace of high-performance prompt engineering templates for LLMs."
+            />
 
-            {/* Small Feature — Secure Datasets */}
-            <div className="md:col-span-4 glass-card rounded-xl p-12 group">
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-6">
-                <span className="material-symbols-outlined text-primary text-2xl">
-                  database
-                </span>
-              </div>
-              <h3 className="font-heading text-headline-md font-semibold text-primary mb-4">
-                Secure Datasets
-              </h3>
-              <p className="text-on-surface-variant">
-                Trade proprietary training data through encrypted decentralized
-                storage layers.
-              </p>
-            </div>
+            <FeatureCard
+              className="md:col-span-4"
+              icon="database"
+              title="Secure Datasets"
+              description="Trade proprietary training data through encrypted decentralized storage layers."
+            />
 
             {/* Large Feature — Complex Workflows */}
             <div className="md:col-span-8 glass-card rounded-xl p-12 flex flex-col md:flex-row gap-6 group items-center">
