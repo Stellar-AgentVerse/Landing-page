@@ -1,4 +1,18 @@
 import RevenueCard from "./RevenueCard";
+import Icon from "./Icon";
+
+const points = [
+  {
+    title: "You set the price",
+    detail:
+      "List a prompt at the price you choose, in test XLM. You can update or delist it at any time.",
+  },
+  {
+    title: "Settlement runs on Stellar",
+    detail:
+      "Stellar settles transactions in seconds for a fraction of a cent. During the beta this happens on the test network, so balances have no monetary value.",
+  },
+];
 
 export default function RevenueSection() {
   return (
@@ -6,43 +20,29 @@ export default function RevenueSection() {
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Left: Text */}
         <div>
-          <h2 className="font-heading text-headline-lg md:text-display-xl font-bold text-primary mb-8 leading-tight">
-            Build Once. <br />
-            <span className="text-accent">Earn Forever.</span>
+          <h2 className="font-heading text-headline-lg md:text-display-xl font-bold text-primary mb-6 leading-tight">
+            Publish a prompt. <br />
+            <span className="text-accent">Get credited for it.</span>
           </h2>
+          <p className="text-body-lg text-on-surface-variant mb-8">
+            Creator payouts are live on Testnet only. We are not promising an
+            income, and no earnings figure on this site is real.
+          </p>
           <div className="space-y-8">
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-                <span className="material-symbols-outlined text-accent text-sm">
-                  check
-                </span>
+            {points.map((point) => (
+              <div key={point.title} className="flex gap-4">
+                <div
+                  aria-hidden="true"
+                  className="flex-shrink-0 w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center"
+                >
+                  <Icon name="check" className="w-4 h-4 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-primary mb-1">{point.title}</h3>
+                  <p className="text-on-surface-variant">{point.detail}</p>
+                </div>
               </div>
-              <div>
-                <h4 className="font-bold text-primary mb-1">
-                  Pay-Per-Use Economy
-                </h4>
-                <p className="text-on-surface-variant">
-                  Set your own rates. Get paid every time your AI agent or
-                  workflow is invoked by an API.
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-                <span className="material-symbols-outlined text-accent text-sm">
-                  check
-                </span>
-              </div>
-              <div>
-                <h4 className="font-bold text-primary mb-1">
-                  Micro-Payments via Stellar
-                </h4>
-                <p className="text-on-surface-variant">
-                  Settlements happen in seconds with near-zero fees, enabling
-                  profitable sub-cent transactions.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 

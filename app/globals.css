@@ -98,3 +98,42 @@ body {
   background-color: rgba(95, 251, 241, 0.3);
   color: #ffffff;
 }
+
+
+/* Typography for long-form legal and policy pages */
+.legal-prose h2 {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.legal-prose p {
+  line-height: 1.7;
+}
+
+.legal-prose ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  line-height: 1.7;
+}
+
+.legal-prose li + li {
+  margin-top: 0.5rem;
+}
+
+.legal-prose a {
+  color: #5FFBF1;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.legal-prose code {
+  font-family: var(--font-label), monospace;
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
