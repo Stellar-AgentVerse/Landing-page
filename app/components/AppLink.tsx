@@ -53,9 +53,13 @@ export default function AppLink({
     getServerSearch,
   );
 
+  // withAttribution decides for itself which destinations may receive campaign
+  // data; it returns internal policy links and third-party links untouched.
+  const resolved = withAttribution(href, search);
+
   if (!isExternal(href)) {
     return (
-      <Link href={href} className={className} {...rest}>
+      <Link href={resolved} className={className} {...rest}>
         {children}
       </Link>
     );
@@ -63,7 +67,7 @@ export default function AppLink({
 
   return (
     <a
-      href={withAttribution(href, search)}
+      href={resolved}
       className={className}
       rel="noopener noreferrer"
       {...(newTab ? { target: "_blank" } : {})}

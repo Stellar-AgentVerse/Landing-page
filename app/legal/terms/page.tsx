@@ -5,7 +5,16 @@ import { SUPPORT_EMAIL } from "../../config/site";
 
 const doc = getLegalDoc("terms");
 
-export const metadata: Metadata = { title: doc.title, description: doc.summary };
+// A draft that has not been through legal review should not be indexed as if
+// it were binding policy.
+export const metadata: Metadata = {
+  title: doc.title,
+  description: doc.summary,
+  robots:
+    doc.reviewStatus === "reviewed"
+      ? { index: true, follow: true }
+      : { index: false, follow: true },
+};
 
 export default function TermsPage() {
   return (

@@ -19,9 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # No `version:` input on purpose. pnpm/action-setup@v4 reads the
+      # `packageManager` field in package.json, which is the same source of
+      # truth that produced pnpm-lock.yaml. Specifying both can fail with
+      # "Multiple versions of pnpm specified" as soon as the two drift.
       - uses: pnpm/action-setup@v4
-        with:
-          version: 10
 
       - uses: actions/setup-node@v4
         with:

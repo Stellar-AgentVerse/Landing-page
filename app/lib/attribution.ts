@@ -1,11 +1,11 @@
-import { APP_URL } from "../config/site";
+import { ACCESS_ROUTE, APP_URL } from "../config/site";
 
 /**
- * The only query parameters this site will ever forward to the app.
+ * The only query parameters this site will ever forward.
  *
  * An allowlist (never a denylist) keeps arbitrary caller-controlled data —
- * session tokens, emails, redirect targets — from being relayed to another
- * origin just because someone appended it to the landing page URL.
+ * session tokens, emails, redirect targets — from being relayed just because
+ * someone appended it to the landing page URL.
  */
 export const ALLOWED_ATTRIBUTION_PARAMS = [
   "utm_source",
@@ -27,37 +27,54 @@ function isSafeValue(value: string): boolean {
   return !CONTROL_CHARS.test(value);
 }
 
+/** Only used to parse relative hrefs; never emitted. */
+const RELATIVE_BASE = "https://relative.invalid";
+
+/**
+ * Decides whether a destination is one of ours and therefore allowed to
+ * receive campaign data.
+ *
+ * Two cases qualify, and nothing else:
+ *  - the configured app origin, and
+ *  - the in-repo /access route, which is where CTAs land while the app is not
+ *    deployed. Without this the campaign that paid for the click would be lost
+ *    at exactly the moment it converts, which is the state the site is in today.
+ *
+ * Every other href — /legal/*, github.com, stellar.org, mailto: — is returned
+ * untouched, so campaign data never reaches a third party and internal policy
+ * pages do not accumulate tracking noise.
+ */
+function isOurDestination(baseHref: string): boolean {
+  if (baseHref === ACCESS_ROUTE || baseHref.startsWith(`${ACCESS_ROUTE}?`)) {
+    return true;
+  }
+  if (!APP_URL || !/^https?:\/\//i.test(baseHref)) return false;
+  try {
+    return new URL(baseHref).origin === new URL(APP_URL).origin;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Copies allowlisted attribution params from the current page URL onto an
- * outbound app link.
+ * outbound link.
  *
  * Deliberate non-goals:
  *  - It never reads a destination from the query string, so it cannot be turned
  *    into an open redirect.
- *  - It only decorates URLs on the configured app origin. Any other href — an
- *    internal route, stellar.org, GitHub — is returned untouched, so campaign
- *    data is never leaked to a third party.
- *  - Params already present on the base href win; attribution never overwrites them.
+ *  - Params already present on the base href win; attribution never overwrites.
  */
 export function withAttribution(baseHref: string, search: string): string {
-  if (!APP_URL) return baseHref;
-  if (!/^https?:\/\//i.test(baseHref)) return baseHref;
   if (!search || search === "?") return baseHref;
+  if (!isOurDestination(baseHref)) return baseHref;
+
+  const relative = !/^https?:\/\//i.test(baseHref);
 
   let target: URL;
-  let appOrigin: string;
-  try {
-    target = new URL(baseHref);
-    appOrigin = new URL(APP_URL).origin;
-  } catch {
-    return baseHref;
-  }
-
-  // Only ever decorate the app we control.
-  if (target.origin !== appOrigin) return baseHref;
-
   let incoming: URLSearchParams;
   try {
+    target = new URL(baseHref, RELATIVE_BASE);
     incoming = new URLSearchParams(search);
   } catch {
     return baseHref;
@@ -72,5 +89,6 @@ export function withAttribution(baseHref: string, search: string): string {
     changed = true;
   }
 
-  return changed ? target.toString() : baseHref;
+  if (!changed) return baseHref;
+  return relative ? `${target.pathname}${target.search}` : target.toString();
 }
