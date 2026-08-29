@@ -4,9 +4,9 @@ import Icon, { type IconName } from "./Icon";
 const facts = [
   {
     icon: "zap" as IconName,
-    title: "~5s ledger close",
+    title: "~5-6s ledger close",
     detail:
-      "Stellar closes a ledger roughly every five seconds, so a confirmed purchase does not leave the buyer waiting.",
+      "Stellar closes a ledger every five to six seconds, so a confirmed purchase does not leave the buyer waiting long.",
   },
   {
     icon: "receipt" as IconName,

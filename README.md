@@ -26,7 +26,7 @@ optional — the site builds and behaves correctly with no configuration at all.
 | Variable | Purpose | When unset |
 | --- | --- | --- |
 | `NEXT_PUBLIC_APP_URL` | The deployed marketplace app. All primary CTAs point here. | CTAs fall back to `/access` and relabel to "Request Beta Access". |
-| `NEXT_PUBLIC_SITE_URL` | Canonical URL of this landing page. | `metadataBase`, canonical and OG URLs are omitted. |
+| `NEXT_PUBLIC_SITE_URL` | Public URL of this landing page, used for `metadataBase` and OG URLs. | `metadataBase` and OG URLs are omitted. |
 | `NEXT_PUBLIC_SUPPORT_EMAIL` | Address behind every support link. | A placeholder address is used. |
 | `NEXT_PUBLIC_DOCS_URL` | Public documentation. | Falls back to the GitHub organisation. |
 
@@ -35,9 +35,15 @@ Two things worth knowing:
 - `NEXT_PUBLIC_*` values are **inlined at build time**. Changing one in your
   hosting provider requires a **redeploy**, not just a restart.
 - `NEXT_PUBLIC_APP_URL` must be an absolute `https://` URL (`http://` is
-  accepted for localhost only). Anything else is rejected and treated as unset,
-  so a typo degrades to the safe fallback instead of sending visitors somewhere
-  unexpected.
+  accepted for localhost only). A malformed value is rejected and treated as
+  unset, so it degrades to the `/access` fallback. Note this validates **shape,
+  not identity**: a well-formed but wrong https origin would still be accepted,
+  so double-check the value you set.
+
+No page declares a `rel="canonical"` link. That is deliberate while the project
+has no canonical public URL — pointing every route at one would tell search
+engines the legal and support pages are duplicates of the homepage. Add
+per-route `alternates` once a real domain exists.
 
 ## How CTAs work
 
@@ -51,10 +57,11 @@ hardcoded destination and no "coming soon" modal anywhere in the codebase.
 
 Campaign attribution is preserved across the hop. `app/lib/attribution.ts`
 copies an allowlist — `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`,
-`utm_content`, `ref` — onto the outbound URL, and nothing else. It only ever
-decorates the configured app origin, never accepts a destination from the query
-string, and rejects over-long or control-character values, so it cannot become
-an open redirect or leak data to a third party.
+`utm_content`, `ref` — onto the outbound URL, and nothing else. It decorates only
+two destinations — the configured app origin and the in-repo `/access` fallback —
+never accepts a destination from the query string, and rejects over-long or
+control-character values, so it cannot become an open redirect or leak data to a
+third party.
 
 ## Checks
 

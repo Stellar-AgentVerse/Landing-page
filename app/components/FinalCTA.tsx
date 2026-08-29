@@ -1,5 +1,5 @@
 import AppLink from "./AppLink";
-import { DOCS_URL, IS_APP_LIVE, appRoute } from "../config/site";
+import { DOCS_URL, GITHUB_URL, IS_APP_LIVE, appRoute } from "../config/site";
 
 export default function FinalCTA() {
   return (
@@ -27,7 +27,7 @@ export default function FinalCTA() {
             newTab
             className="border border-outline text-primary font-bold px-12 py-4 rounded-full hover:bg-white/5 transition-all active:scale-95 text-lg inline-flex items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
-            Read the Docs
+            {DOCS_URL === GITHUB_URL ? "View the Source" : "Read the Docs"}
           </AppLink>
         </div>
       </div>

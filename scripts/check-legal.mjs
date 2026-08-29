@@ -11,9 +11,9 @@
  * impossible to ship silently: the page itself renders a draft banner, and this
  * check prints the outstanding list on every CI run.
  *
- * Run with --strict (CI does this on the main branch, and release tooling
- * should) to exit non-zero while any document is unreviewed. That is the switch
- * to flip before inviting external users, per acceptance criterion 5.
+ * Run with --strict to exit non-zero while any document is unreviewed. CI does
+ * NOT pass that flag today — release tooling should, and it is the switch to
+ * flip before inviting external users, per acceptance criterion 5.
  */
 
 import { readFileSync } from "node:fs";

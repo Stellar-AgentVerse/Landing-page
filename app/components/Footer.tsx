@@ -21,9 +21,14 @@ const productLinks: FooterLink[] = [
   { label: "Beta Access", href: "/access" },
 ];
 
+// DOCS_URL falls back to the GitHub org, which is also GITHUB_URL. Listing both
+// would render two identical links, so the source entry only appears once the
+// two actually differ.
 const resourceLinks: FooterLink[] = [
-  { label: "Documentation", href: DOCS_URL, newTab: true },
-  { label: "Source Code", href: GITHUB_URL, newTab: true },
+  { label: "Source & docs on GitHub", href: DOCS_URL, newTab: true },
+  ...(DOCS_URL === GITHUB_URL
+    ? []
+    : [{ label: "Source Code", href: GITHUB_URL, newTab: true }]),
   { label: "Stellar Network", href: STELLAR_URL, newTab: true },
 ];
 
@@ -104,10 +109,10 @@ export default function Footer() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-6 mt-12 pt-6 border-t border-outline-variant/5 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
-        <p className="font-label text-label-sm text-on-surface-variant/40">
+        <p className="font-label text-label-sm text-on-surface-variant/70">
           &copy; {new Date().getFullYear()} AgentVerse. Built on Stellar.
         </p>
-        <p className="font-label text-label-sm text-on-surface-variant/40">
+        <p className="font-label text-label-sm text-on-surface-variant/70">
           Testnet private beta — not an offer of financial products.
         </p>
       </div>

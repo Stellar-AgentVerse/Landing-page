@@ -8,6 +8,12 @@
  *
  * External links (http/https), mailto:, tel: and bare #fragments are reported
  * but never fail the build — a third party going down is not our regression.
+ *
+ * Scope, stated plainly: this reads string LITERALS. An href built from a config
+ * constant (href={DOCS_URL}) or a helper call (href={appRoute("/x")}) is not
+ * counted, so the external tally undercounts. Internal routes are still fully
+ * covered because every internal destination in this repo is a literal, either
+ * in JSX or in app/config/*.
  */
 
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
@@ -119,7 +125,8 @@ const unreferenced = [...routes].filter((r) => r !== "/" && !seenInternal.has(r)
 
 console.log(`Routes found        : ${routes.size}`);
 console.log(`Source files scanned: ${sourceFiles.length}`);
-console.log(`External links      : ${externalCount} (not checked)`);
+console.log(`External literals   : ${externalCount} (not checked; hrefs held in`);
+console.log("                      config variables are not counted here)");
 if (unreferenced.length) {
   console.log(`Not linked anywhere : ${unreferenced.join(", ")}`);
 }
