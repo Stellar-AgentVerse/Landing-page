@@ -1,5 +1,7 @@
+import Icon, { type IconName } from "./Icon";
+
 interface Props {
-  icon: string;
+  icon: IconName;
   title: string;
   description: string;
   accent?: boolean;
@@ -23,9 +25,7 @@ export default function FeatureCard({
       <div
         className={`w-12 h-12 rounded-lg ${iconBg} flex items-center justify-center mb-6`}
       >
-        <span className={`material-symbols-outlined ${iconColor} text-2xl`}>
-          {icon}
-        </span>
+        <Icon name={icon} className={`w-6 h-6 ${iconColor}`} />
       </div>
       <h3 className="font-heading text-headline-md font-semibold text-primary mb-4">
         {title}

@@ -1,31 +1,33 @@
-"use client";
+import Image from "next/image";
+import Link from "next/link";
+import AppLink from "./AppLink";
+import { IS_APP_LIVE, appRoute } from "../config/site";
 
-interface Props {
-  onLaunchApp: () => void;
-}
-
-export default function Navbar({ onLaunchApp }: Props) {
+export default function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant/20">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            alt="AgentVerse Logo"
+        <Link href="/" className="flex items-center gap-3" aria-label="AgentVerse home">
+          <Image
+            alt=""
+            aria-hidden="true"
             className="h-10 w-auto"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeCp43Z0Y8feFts84-zMuB_BPxLzJ4Hvh9MC3FsuIrSl6hgDxnF2dHA5K-4NuLwHwDFWb5RDXozjJWrZ7zcznpYMWSHpITSXhnTzeUSTIRcMWeftcWwKzz74auDxW_uXlpFvgqgQoTSwwAYblVSVpp7_ekk93fTlGXFVyEcMaNL0nOCXiqRrl276PCdOpx_zDT2BlydodLzQaNKOX4ZVj0iVh567HXtWHlwPer32oYn7OHu5Sjwslob6rt2g2J0blYNS9uW8r_p2wX"
+            src="/stellar-logo.png"
+            width={40}
+            height={40}
+            priority
           />
           <span className="font-heading text-3xl font-bold tracking-tighter text-primary hidden sm:block">
             AgentVerse
           </span>
-        </div>
+        </Link>
         <div className="flex items-center gap-3">
-          <button
-            onClick={onLaunchApp}
-            className="font-label text-label-sm px-4 py-2 rounded-full border border-outline text-on-surface hover:text-primary transition-colors duration-300 active:scale-95"
+          <AppLink
+            href={appRoute()}
+            className="font-label text-label-sm px-4 py-2 rounded-full border border-outline text-on-surface hover:text-primary transition-colors duration-300 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
-            Launch App
-          </button>
+            {IS_APP_LIVE ? "Launch App" : "Request Access"}
+          </AppLink>
         </div>
       </div>
     </nav>
