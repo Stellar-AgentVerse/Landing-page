@@ -11,8 +11,9 @@ export default function HeroSection() {
       </h1>
 
       <p className="text-body-lg text-on-surface-variant max-w-2xl mb-10">
-        Buy and sell reviewed, production-ready prompts. Market V1 is a private
-        beta running on the Stellar test network — no real funds are involved.
+        Buy and sell prompts that a human has reviewed before listing. Market V1
+        is a private beta on the Stellar test network — no real funds are
+        involved.
       </p>
 
       <CTAButtons />

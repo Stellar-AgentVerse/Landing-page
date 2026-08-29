@@ -14,7 +14,7 @@ const faqs = [
   {
     question: "How do I get access?",
     answer:
-      "The beta is invitation based. Request access from any button on this page and we will contact you when a place opens up.",
+      "The beta is invitation based. Follow the Beta Access link in the footer to ask for an invitation, and we will contact you when a place opens up.",
   },
   {
     question: "How do creators get paid?",

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import LegalPageShell from "../../components/LegalPageShell";
 import { getLegalDoc } from "../../config/legal";
-import { SUPPORT_EMAIL } from "../../config/site";
+import SupportLink from "../../components/SupportLink";
 
 const doc = getLegalDoc("content-policy");
 
@@ -79,7 +79,7 @@ export default function ContentPolicyPage() {
       <h2>6. Reporting and appeals</h2>
       <p>
         Report a listing to{" "}
-        <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> with the listing
+        <SupportLink /> with the listing
         link and what is wrong. We aim to acknowledge within 3 working days. If
         your listing was removed and you think we got it wrong, reply to the
         removal notice and a different reviewer will look at it.

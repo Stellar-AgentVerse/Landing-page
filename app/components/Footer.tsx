@@ -5,7 +5,9 @@ import {
   GITHUB_URL,
   IS_APP_LIVE,
   STELLAR_URL,
-  SUPPORT_EMAIL,
+  SUPPORT_HREF,
+  SUPPORT_IS_EXTERNAL,
+  SUPPORT_LABEL,
   appRoute,
 } from "../config/site";
 
@@ -40,9 +42,15 @@ const legalLinks: FooterLink[] = [
   { label: "Refunds & Disputes", href: "/legal/refunds" },
 ];
 
+// No placeholder address: when no inbox is configured this resolves to the
+// public issue tracker rather than a mailto nobody reads.
 const supportLinks: FooterLink[] = [
   { label: "Support", href: "/support" },
-  { label: SUPPORT_EMAIL, href: `mailto:${SUPPORT_EMAIL}` },
+  {
+    label: SUPPORT_IS_EXTERNAL ? "Report an issue" : SUPPORT_LABEL,
+    href: SUPPORT_HREF,
+    newTab: SUPPORT_IS_EXTERNAL,
+  },
 ];
 
 function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) {

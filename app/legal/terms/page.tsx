@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import LegalPageShell from "../../components/LegalPageShell";
 import { getLegalDoc } from "../../config/legal";
-import { SUPPORT_EMAIL } from "../../config/site";
+import SupportLink from "../../components/SupportLink";
 
 const doc = getLegalDoc("terms");
 
@@ -85,7 +85,7 @@ export default function TermsPage() {
       <p>
         We will update this page when the terms change and revise the date above.
         Questions go to{" "}
-        <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.
+        <SupportLink />.
       </p>
     </LegalPageShell>
   );

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import LegalPageShell from "../../components/LegalPageShell";
 import { getLegalDoc } from "../../config/legal";
-import { SUPPORT_EMAIL } from "../../config/site";
+import SupportLink from "../../components/SupportLink";
 
 const doc = getLegalDoc("refunds");
 
@@ -43,7 +43,7 @@ export default function RefundsPage() {
       </ul>
       <p>
         Request it within 14 days of purchase by writing to{" "}
-        <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> with the listing
+        <SupportLink /> with the listing
         and what went wrong. We aim to decide within 10 working days.
       </p>
 
@@ -70,9 +70,21 @@ export default function RefundsPage() {
 
       <h2>6. Disputes</h2>
       <p>
-        Contact us first — most problems are resolved directly. If we cannot
-        agree, the dispute process in the Terms applies. Chargebacks do not exist
-        on Testnet, and an on-chain transaction cannot be reversed by us.
+        Contact <SupportLink /> first, with the listing and what went wrong. Most
+        problems are resolved directly, and we will tell you the outcome and the
+        reason for it.
+      </p>
+      <p>
+        Two limits are worth stating plainly. On Testnet there is no payment
+        provider, so there is no chargeback to raise. And a transaction already
+        confirmed on Stellar cannot be reversed by us or by anyone — what we can
+        reverse is access to the listing and the corresponding creator credit.
+      </p>
+      <p>
+        A formal escalation procedure, including governing law and venue, has not
+        been settled yet. It will be added to the Terms before AgentVerse handles
+        anything of real value, and this page will point to it then. Until that
+        happens your statutory rights are unaffected.
       </p>
     </LegalPageShell>
   );

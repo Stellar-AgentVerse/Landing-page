@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { LegalDoc } from "../config/legal";
-import { SUPPORT_EMAIL } from "../config/site";
+import SupportLink from "./SupportLink";
 
 /**
  * Shared chrome for every legal page: title, review provenance, and — while the
@@ -44,12 +44,7 @@ export default function LegalPageShell({
             about its intended terms. It is not legal advice, and it must be
             reviewed before AgentVerse invites public users or handles anything
             of real value. Questions:{" "}
-            <a
-              className="text-accent underline underline-offset-4"
-              href={`mailto:${SUPPORT_EMAIL}`}
-            >
-              {SUPPORT_EMAIL}
-            </a>
+            <SupportLink className="text-accent underline underline-offset-4" />
             .
           </p>
         </aside>

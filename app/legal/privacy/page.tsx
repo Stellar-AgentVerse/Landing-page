@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import LegalPageShell from "../../components/LegalPageShell";
 import { getLegalDoc } from "../../config/legal";
-import { SUPPORT_EMAIL } from "../../config/site";
+import SupportLink from "../../components/SupportLink";
 
 const doc = getLegalDoc("privacy");
 
@@ -67,13 +67,13 @@ export default function PrivacyPage() {
         unless we must keep it. Depending on where you live you may have the
         right to access, correct, export or delete your data, and to complain to
         a regulator. Write to{" "}
-        <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> and we will
+        <SupportLink /> and we will
         respond within 30 days. On-chain data is the exception described above.
       </p>
 
       <h2>7. Contact</h2>
       <p>
-        Privacy questions: <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.
+        Privacy questions: <SupportLink />.
         A named data controller and postal address must be added here before
         public launch.
       </p>

@@ -45,8 +45,20 @@ export const IS_APP_LIVE = APP_URL !== null;
 /** Where people ask for private-beta access. Always in-repo, so it always works. */
 export const ACCESS_ROUTE = "/access";
 
-export const SUPPORT_EMAIL =
-  process.env.NEXT_PUBLIC_SUPPORT_EMAIL?.trim() || "support@agentverse.example";
+/**
+ * Accepts a support address only if it looks like a real mailbox. A malformed
+ * value degrades exactly like a malformed NEXT_PUBLIC_APP_URL rather than
+ * rendering a broken mailto.
+ */
+function parseEmail(value: string | undefined): string | null {
+  const raw = value?.trim();
+  if (!raw) return null;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw)) return null;
+  return raw;
+}
+
+/** A monitored support inbox, or null when none has been configured. */
+export const SUPPORT_EMAIL = parseEmail(process.env.NEXT_PUBLIC_SUPPORT_EMAIL);
 
 export const DOCS_URL =
   parseExternalUrl(process.env.NEXT_PUBLIC_DOCS_URL) ??
@@ -57,6 +69,28 @@ export const SITE_URL = parseExternalUrl(process.env.NEXT_PUBLIC_SITE_URL);
 
 export const GITHUB_URL = "https://github.com/Stellar-AgentVerse";
 export const STELLAR_URL = "https://stellar.org";
+
+/** Public issue tracker — the support channel that always works. */
+export const ISSUES_URL = `${GITHUB_URL}/Landing-page/issues`;
+
+/**
+ * The support channel, resolved.
+ *
+ * There is deliberately no placeholder address. With no app deployed, every
+ * primary CTA lands on /access and support is the next step, so an unmonitored
+ * inbox would be the same dead end as the href="#" links this work removed.
+ * When no inbox is configured we send people to the issue tracker, which is
+ * real and monitored.
+ */
+export const SUPPORT_HREF = SUPPORT_EMAIL
+  ? `mailto:${SUPPORT_EMAIL}`
+  : ISSUES_URL;
+
+/** What to call the support channel in prose and link text. */
+export const SUPPORT_LABEL = SUPPORT_EMAIL ?? "a GitHub issue";
+
+/** True when the support channel leaves this site (i.e. the issue tracker). */
+export const SUPPORT_IS_EXTERNAL = SUPPORT_EMAIL === null;
 
 /**
  * Builds a destination inside the app when it is live, and falls back to the

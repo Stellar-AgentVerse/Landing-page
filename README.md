@@ -27,7 +27,7 @@ optional — the site builds and behaves correctly with no configuration at all.
 | --- | --- | --- |
 | `NEXT_PUBLIC_APP_URL` | The deployed marketplace app. All primary CTAs point here. | CTAs fall back to `/access` and relabel to "Request Beta Access". |
 | `NEXT_PUBLIC_SITE_URL` | Public URL of this landing page, used for `metadataBase` and OG URLs. | `metadataBase` and OG URLs are omitted. |
-| `NEXT_PUBLIC_SUPPORT_EMAIL` | Address behind every support link. | A placeholder address is used. |
+| `NEXT_PUBLIC_SUPPORT_EMAIL` | A **monitored** inbox behind every support link. | Support links degrade to the public GitHub issue tracker. No address is rendered. |
 | `NEXT_PUBLIC_DOCS_URL` | Public documentation. | Falls back to the GitHub organisation. |
 
 Two things worth knowing:
@@ -54,6 +54,14 @@ hardcoded destination and no "coming soon" modal anywhere in the codebase.
   `/publish`, `/dashboard`).
 - **App not configured** → CTAs link to `/access`, an in-repo page that explains
   the beta and offers a contact route. It always works.
+
+The support channel is gated the same way, and for the same reason. With no app
+deployed, `/access` is where every CTA lands and support is the next step — so
+an unmonitored inbox would be the same dead end as an `href="#"`. When
+`NEXT_PUBLIC_SUPPORT_EMAIL` is unset, no address is rendered anywhere; support
+links resolve to the public issue tracker and the access request opens a
+pre-filled issue instead. Every mention routes through `SupportLink`, so no page
+can reintroduce a placeholder.
 
 Campaign attribution is preserved across the hop. `app/lib/attribution.ts`
 copies an allowlist — `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`,

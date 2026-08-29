@@ -55,6 +55,78 @@ const HREF_RE =
 /** Route-like string literals, e.g. those held in config modules. */
 const ROUTE_LITERAL_RE = /["'`](\/[a-z0-9][a-z0-9\-/]*)["'`]/g;
 
+/**
+ * Blanks out comments so prose that merely *mentions* a link (for example a
+ * comment explaining why href="#" was removed) is not mistaken for real markup.
+ *
+ * Walks the source tracking string, template and comment state rather than
+ * regex-stripping, so a "//" inside "https://..." is left alone. Comment bodies
+ * are replaced with spaces to keep every offset — and therefore line numbers —
+ * intact.
+ */
+function stripComments(source) {
+  const out = source.split("");
+  let i = 0;
+  const n = source.length;
+  let state = "code";
+  let quote = "";
+
+  while (i < n) {
+    const c = source[i];
+    const next = source[i + 1];
+
+    if (state === "code") {
+      if (c === "/" && next === "/") {
+        state = "line";
+        out[i] = out[i + 1] = " ";
+        i += 2;
+        continue;
+      }
+      if (c === "/" && next === "*") {
+        state = "block";
+        out[i] = out[i + 1] = " ";
+        i += 2;
+        continue;
+      }
+      if (c === '"' || c === "'" || c === "`") {
+        state = "string";
+        quote = c;
+      }
+      i += 1;
+      continue;
+    }
+
+    if (state === "string") {
+      if (c === "\\") {
+        i += 2;
+        continue;
+      }
+      if (c === quote) state = "code";
+      i += 1;
+      continue;
+    }
+
+    if (state === "line") {
+      if (c === "\n") state = "code";
+      else out[i] = " ";
+      i += 1;
+      continue;
+    }
+
+    // block
+    if (c === "*" && next === "/") {
+      out[i] = out[i + 1] = " ";
+      state = "code";
+      i += 2;
+      continue;
+    }
+    if (c !== "\n") out[i] = " ";
+    i += 1;
+  }
+
+  return out.join("");
+}
+
 function classify(href) {
   if (!href) return "empty";
   if (/^https?:\/\//i.test(href)) return "external";
@@ -99,7 +171,7 @@ function checkInternal(href, file) {
 }
 
 for (const file of sourceFiles) {
-  const source = readFileSync(file, "utf8");
+  const source = stripComments(readFileSync(file, "utf8"));
 
   for (const match of source.matchAll(HREF_RE)) {
     const href = match[1] ?? match[2] ?? match[3] ?? match[4] ?? match[5];

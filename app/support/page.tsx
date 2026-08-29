@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { GITHUB_URL, SUPPORT_EMAIL } from "../config/site";
+import { ISSUES_URL, SUPPORT_EMAIL } from "../config/site";
 import { LEGAL_DOCS } from "../config/legal";
 
 export const metadata: Metadata = {
@@ -8,21 +8,29 @@ export const metadata: Metadata = {
   description: "How to reach the AgentVerse team and what to expect.",
 };
 
+// The email channel only appears when a real inbox is configured. Otherwise the
+// issue tracker is the whole support story, and it is described as such rather
+// than sitting under a placeholder address.
 const channels = [
-  {
-    title: "Email",
-    detail:
-      "The fastest route for access requests, account problems, refunds and privacy requests.",
-    action: SUPPORT_EMAIL,
-    href: `mailto:${SUPPORT_EMAIL}`,
-    external: false,
-  },
+  ...(SUPPORT_EMAIL
+    ? [
+        {
+          title: "Email",
+          detail:
+            "The fastest route for access requests, account problems, refunds and privacy requests.",
+          action: SUPPORT_EMAIL,
+          href: `mailto:${SUPPORT_EMAIL}`,
+          external: false,
+        },
+      ]
+    : []),
   {
     title: "GitHub issues",
-    detail:
-      "Bugs, feature requests and anything about the code. Public, so do not post personal data.",
+    detail: SUPPORT_EMAIL
+      ? "Bugs, feature requests and anything about the code. Public, so do not post personal data."
+      : "Our support channel during the beta — access requests, bugs and questions. Public, so do not post personal data.",
     action: "Open an issue",
-    href: `${GITHUB_URL}/Landing-page/issues`,
+    href: ISSUES_URL,
     external: true,
   },
 ];
@@ -44,6 +52,13 @@ export default function SupportPage() {
         AgentVerse is a small team running an early beta. We answer everything,
         but not instantly — expect a reply within 3 working days.
       </p>
+      {SUPPORT_EMAIL ? null : (
+        <p className="text-body-md text-on-surface-variant/80 mb-10">
+          We do not publish a support address yet, so everything runs through the
+          public issue tracker. That keeps the channel honest: it is monitored,
+          and you can see the reply.
+        </p>
+      )}
 
       <div className="grid gap-4 mb-12">
         {channels.map((channel) => (
@@ -66,7 +81,7 @@ export default function SupportPage() {
         Reporting a problem listing
       </h2>
       <p className="text-on-surface-variant mb-10">
-        Email us the listing link and what is wrong with it. Content that
+        Send us the listing link and what is wrong with it. Content that
         breaches the{" "}
         <Link className="text-accent underline underline-offset-4" href="/legal/content-policy">
           Content &amp; Creator Policy

@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { APP_URL, GITHUB_URL, IS_APP_LIVE, SUPPORT_EMAIL } from "../config/site";
+import AppLink from "../components/AppLink";
+import SupportLink from "../components/SupportLink";
+import {
+  GITHUB_URL,
+  ISSUES_URL,
+  IS_APP_LIVE,
+  SUPPORT_EMAIL,
+  appRoute,
+} from "../config/site";
 
 export const metadata: Metadata = {
   title: "Request beta access",
@@ -8,21 +16,37 @@ export const metadata: Metadata = {
     "Market V1 is an invitation-only beta of the AgentVerse prompt marketplace, running on the Stellar test network.",
 };
 
-const mailtoHref = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(
-  "Market V1 beta access request",
-)}&body=${encodeURIComponent(
-  [
-    "Hi AgentVerse team,",
-    "",
-    "I would like access to the Market V1 beta.",
-    "",
-    "I want to join as: (buyer / creator / both)",
-    "What I would use it for:",
-    "Stellar wallet address (optional):",
-    "",
-    "Thanks!",
-  ].join("\n"),
-)}`;
+const REQUEST_SUBJECT = "Market V1 beta access request";
+
+const REQUEST_BODY = [
+  "Hi AgentVerse team,",
+  "",
+  "I would like access to the Market V1 beta.",
+  "",
+  "I want to join as: (buyer / creator / both)",
+  "What I would use it for:",
+  "Stellar wallet address (optional):",
+].join("\n");
+
+/**
+ * Where the "request an invitation" button goes.
+ *
+ * With a configured inbox it opens a pre-filled mail draft. Without one it opens
+ * a pre-filled issue on the public tracker rather than a mailto nobody reads —
+ * this is the live conversion path while the app is undeployed, so it has to
+ * reach a human.
+ */
+const requestHref = SUPPORT_EMAIL
+  ? `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(
+      REQUEST_SUBJECT,
+    )}&body=${encodeURIComponent(`${REQUEST_BODY}\n\nThanks!`)}`
+  : `${ISSUES_URL}/new?title=${encodeURIComponent(
+      REQUEST_SUBJECT,
+    )}&body=${encodeURIComponent(REQUEST_BODY)}`;
+
+const requestLabel = SUPPORT_EMAIL
+  ? "Email us for an invitation"
+  : "Request an invitation on GitHub";
 
 export default function AccessPage() {
   return (
@@ -50,13 +74,12 @@ export default function AccessPage() {
             The app is live. If you already have an invitation you can sign in
             with your Stellar wallet.
           </p>
-          <a
-            href={APP_URL ?? "/"}
-            rel="noopener noreferrer"
-            className="inline-flex bg-accent text-background font-bold px-8 py-3 rounded-full active:scale-95 transition-transform"
+          <AppLink
+            href={appRoute()}
+            className="inline-flex bg-accent text-background font-bold px-8 py-3 rounded-full active:scale-95 transition-transform focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             Open the app
-          </a>
+          </AppLink>
         </div>
       ) : (
         <div className="glass-card rounded-xl p-8 mb-10">
@@ -65,7 +88,7 @@ export default function AccessPage() {
           </p>
           <p className="text-on-surface-variant">
             We would rather say so than send you to a page that does not work.
-            Email us and we will add you to the invitation list for the next
+            Ask below and we will add you to the invitation list for the next
             round.
           </p>
         </div>
@@ -73,16 +96,17 @@ export default function AccessPage() {
 
       <div className="flex flex-col sm:flex-row gap-4 mb-12">
         <a
-          href={mailtoHref}
-          className="inline-flex items-center justify-center bg-accent text-background font-bold px-8 py-4 rounded-full active:scale-95 transition-transform"
+          href={requestHref}
+          {...(SUPPORT_EMAIL ? {} : { target: "_blank", rel: "noopener noreferrer" })}
+          className="inline-flex items-center justify-center bg-accent text-background font-bold px-8 py-4 rounded-full active:scale-95 transition-transform focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
-          Email us for an invitation
+          {requestLabel}
         </a>
         <a
           href={GITHUB_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center justify-center border border-outline text-primary font-bold px-8 py-4 rounded-full hover:bg-white/5 transition-all active:scale-95"
+          className="inline-flex items-center justify-center border border-outline text-primary font-bold px-8 py-4 rounded-full hover:bg-white/5 transition-all active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           Follow progress on GitHub
         </a>
@@ -101,8 +125,16 @@ export default function AccessPage() {
       </ul>
 
       <p className="text-on-surface-variant mt-10">
-        Questions? <a className="text-accent underline underline-offset-4" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>{" "}
-        or read the <Link className="text-accent underline underline-offset-4" href="/legal/risk-disclosure">risk disclosure</Link>.
+        Questions? Reach us via{" "}
+        <SupportLink className="text-accent underline underline-offset-4" /> or
+        read the{" "}
+        <Link
+          className="text-accent underline underline-offset-4"
+          href="/legal/risk-disclosure"
+        >
+          risk disclosure
+        </Link>
+        .
       </p>
     </main>
   );
